@@ -22,7 +22,9 @@ cloudinary.config({
 });
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Adjust the origin as necessary
+    origin: process.env.NODE_ENV === "production"
+        ? process.env.FRONTEND_URL   // set this in Vercel env vars to your Vercel domain
+        : "http://localhost:5173",
     credentials: true
 }))
 
