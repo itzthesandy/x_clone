@@ -22,9 +22,11 @@ cloudinary.config({
 });
 
 app.use(cors({
-    origin: process.env.NODE_ENV === "production"
-        ? process.env.FRONTEND_URL   // set this in Vercel env vars to your Vercel domain
-        : "http://localhost:5173",
+    // origin: process.env.NODE_ENV === "production"
+    //     ? process.env.FRONTEND_URL   // set this in Vercel env vars to your Vercel domain
+    //     : "http://localhost:5173",
+    // credentials: true
+    origin: true,   // reflects request origin, works on same domain
     credentials: true
 }))
 
@@ -52,7 +54,9 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
-    connectDB();
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running on ${PORT}`);
+//     connectDB();
+// });
+connectDB();
+export default app;
