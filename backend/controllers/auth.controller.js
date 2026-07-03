@@ -59,10 +59,20 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { username, password } = req.body;
-        const user = await User.findOne({ username: username });
-        const isPasswordValid = await bcrypt.compare(password, user.password || '');
-        if (!user || !isPasswordValid) {
-            return res.status(400).json({ error: 'Invalid username or password' });
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(400).json({
+                error: "Invalid username or password"
+            });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(400).json({
+                error: "Invalid username or password"
+            });
         }
         generateToken(user._id, res);
         res.status(200).json({
