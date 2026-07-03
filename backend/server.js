@@ -15,6 +15,7 @@ import path from 'path';
 dotenv.config();
 
 console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
 console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
 
 const app = express();
