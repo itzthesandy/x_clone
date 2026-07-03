@@ -30,7 +30,7 @@ export const signup = async (req, res) => {
             password: hashedPassword
         });
         if (newUser) {
-            generateToken(newUser, res);
+            generateToken(newUser._id, res);
             await newUser.save();
             res.status(200).json({
                 _id: newUser._id,
@@ -59,6 +59,7 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { username, password } = req.body;
+
         const user = await User.findOne({ username });
 
         if (!user) {
@@ -67,14 +68,19 @@ export const login = async (req, res) => {
             });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(
+            password,
+            user.password
+        );
 
         if (!isPasswordValid) {
             return res.status(400).json({
                 error: "Invalid username or password"
             });
         }
+
         generateToken(user._id, res);
+
         res.status(200).json({
             _id: user._id,
             username: user.username,
@@ -85,13 +91,16 @@ export const login = async (req, res) => {
             profileImage: user.profileImage,
             coverImage: user.coverImage,
             bio: user.bio,
-            links: user.links
-        })
+            links: user.links,
+        });
     } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error("Error during login:", error);
+        res.status(500).json({
+            error: "Internal Server Error",
+        });
     }
 };
+
 
 export const logout = async (req, res) => {
     try {
