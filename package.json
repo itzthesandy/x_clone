@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node backend/server.js",
     "build": "npm install && npm install --include=dev --prefix frontend && npm run build --prefix frontend && node copy-dist.js",
-    "dev": "nodemon backend/server.js"
+    "dev": "nodemon backend/server.js",
+    "vercel-build": "npm install --include=dev --prefix frontend && npm run build --prefix frontend && node copy-dist.js"
   },
   "keywords": [],
   "author": "",
