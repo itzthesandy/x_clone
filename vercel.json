@@ -1,12 +1,11 @@
 {
     "version": 2,
-    "buildCommand": "npm install && npm install --include=dev --prefix frontend && npm run build --prefix frontend && node copy-dist.js",
+    "installCommand": "npm install && npm install --include=dev --prefix frontend",
+    "buildCommand": "npm run build --prefix frontend && node copy-dist.js",
     "builds": [
-        { "src": "backend/server.js", "use": "@vercel/node" },
-        { "src": "dist/**", "use": "@vercel/static" }
+      { "src": "backend/server.js", "use": "@vercel/node" }
     ],
     "routes": [
-        { "src": "/api/(.*)", "dest": "backend/server.js" },
-        { "src": "/(.*)", "dest": "dist/$1" }
+      { "src": "/(.*)", "dest": "backend/server.js" }
     ]
-}
+  }
